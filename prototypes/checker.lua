@@ -2,18 +2,66 @@ data:extend({
     {
       type = "selection-tool",
       name = "circuit-checker",
-      icon = "__base__/graphics/icons/info.png",
+      icon = "__circuit-checker__/graphics/icon.png",
       icon_size = 32,
       stack_size = 1,
       subgroup = "tool",
       selection_color = {r = 0.2, g = 0.8, b = 0.2, a = 0.2},
       alt_selection_color = {r = 0.2, g = 0.2, b = 0.8, a = 0.2},
       selection_mode = {"blueprint"},
-      always_include_tiles = true,
       alt_selection_mode = {"blueprint"},
       selection_cursor_box_type = "entity",
-      alt_selection_cursor_box_type = "copy",
-      show_in_library = true
+      alt_selection_cursor_box_type = "copy"
+    },
+    {
+      action = "create-blueprint-item",
+      associated_control_input = "give-circuit-checker",
+      disabled_small_icon = {
+        filename = "__circuit-checker__/graphics/icon.png",
+        flags = {
+          "gui-icon"
+        },
+        mipmap_count = 2,
+        priority = "extra-high-no-scale",
+        scale = 0.5,
+        size = 24
+      },
+      icon = {
+        filename = "__circuit-checker__/graphics/icon.png",
+        flags = {
+          "gui-icon"
+        },
+        mipmap_count = 2,
+        priority = "extra-high-no-scale",
+        scale = 0.5,
+        size = 32
+      },
+      item_to_create = "circuit-checker",
+      localised_name = {
+        "shortcut.name"
+      },
+      name = "check-circuit",
+      small_icon = {
+        filename = "__circuit-checker__/graphics/icon.png",
+        flags = {
+          "gui-icon"
+        },
+        mipmap_count = 2,
+        priority = "extra-high-no-scale",
+        scale = 0.5,
+        size = 24
+      },
+      style = "green",
+      technology_to_unlock = "circuit-network",
+      type = "shortcut"
+    },
+    {
+      action = "create-blueprint-item",
+      consuming = "game-only",
+      item_to_create = "circuit-checker",
+      key_sequence = "ALT + C",
+      name = "give-circuit-checker",
+      type = "custom-input"
     }
 }
 )
