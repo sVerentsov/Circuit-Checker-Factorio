@@ -1,0 +1,9 @@
+{
+    "author": "Sergey Verentsov",
+    "description": "Find errors in you circuit easily!",
+    "factorio_version": "0.17",
+    "contact": "north1605@list.ru",
+    "name": "circuit-checker",
+    "title": "Circuit Checker",
+    "version": "0.0.1"
+}

@@ -1,0 +1,12 @@
+{
+    "Lua.diagnostics.globals": [
+        "defines",
+        "log",
+        "serpent",
+        "script",
+        "rendering",
+        "game",
+        "data",
+        "table_size"
+    ]
+}
