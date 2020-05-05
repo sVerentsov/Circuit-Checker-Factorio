@@ -1,4 +1,5 @@
 require("utils")
+require("log")
 
 local function container_outputs(control_behavior)
     return {["any-item"] = true}
@@ -253,7 +254,7 @@ local output_fetchers = {
 
 function FETCH_OUTPUT(entity)
     local behavior = entity.get_control_behavior()
-    log("control_behavior: " .. entity.prototype.name .. ": " .. BEHAVIOR_TYPES[behavior.type])
+    LOG("control_behavior: " .. entity.prototype.name .. ": " .. BEHAVIOR_TYPES[behavior.type])
     local ans = output_fetchers[behavior.type](behavior, entity)
     ans["virtual"] = nil
     return ans

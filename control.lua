@@ -2,11 +2,12 @@ require("consts")
 require("signal_reader.input")
 require("signal_reader.output")
 require("checks")
+require("log")
 require("networks")
 
 local function print_errors(errors, player)
     for _, err in pairs(errors) do
-        log(serpent.line(err))
+        LOG(serpent.line(err))
         local str = ""
         if LEVEL_COLORS[err.level] ~= nil then
             str = str .. "[color=" ..
@@ -63,14 +64,14 @@ local function get_selected(event)
     local entity_inputs = {}
     local entity_outputs = {}
     for i, entity in pairs(circuit_entities) do
-        log("Processing entity " .. i)
+        LOG("Processing entity " .. i)
         -- get possible inputs and outputs of entity
         local inputs = FETCH_INPUT(entity)
         entity_inputs[i] = inputs
-        log(i .. " inputs: " .. entity.prototype.name .. " " .. serpent.line(inputs))
+        LOG(i .. " inputs: " .. entity.prototype.name .. " " .. serpent.line(inputs))
         local outputs = FETCH_OUTPUT(entity)
         entity_outputs[i] = outputs
-        log(i .. " outputs: " .. entity.prototype.name .. " " .. serpent.line(outputs))
+        LOG(i .. " outputs: " .. entity.prototype.name .. " " .. serpent.line(outputs))
 
         -- check if required input/output signal settings are set up
         if inputs["blank"] == true then
@@ -94,10 +95,10 @@ local function get_selected(event)
         MERGE_NETWORKS(networks, entity_networks, i)
     end
 
-    log(serpent.block(networks))
+    LOG(serpent.block(networks))
 
     for i, entity in pairs(circuit_entities) do
-        log("checking entity " .. i)
+        LOG("checking entity " .. i)
         local entity_errors = CHECK_ENTITY(entity, entity_inputs[i], entity_outputs[i], networks)
         for _, err in pairs(entity_errors) do
             table.insert(errors, {

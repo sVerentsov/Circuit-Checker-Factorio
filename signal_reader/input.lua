@@ -1,4 +1,5 @@
 require("utils")
+require("log")
 
 local function container_inputs(control_behavior)
     return {} -- container can not use signals, only output them
@@ -7,17 +8,17 @@ end
 local function condition_inputs(condition)
     local ans = {}
     if condition.first_signal == nil or condition.first_signal.name == nil then
-        log("First signal: nil")
+        LOG("First signal: nil")
         ans["blank"] = true
     else 
-        log("First signal: " .. condition.first_signal.name)
+        LOG("First signal: " .. condition.first_signal.name)
         ans[GET_SIGNAL_TYPED_NAME(condition.first_signal)] = true
         ans[condition.first_signal.type] = true
     end
     if condition.second_signal == nil then
-        log("Second signal: nil")
+        LOG("Second signal: nil")
     else
-        log("Second signal:" .. condition.second_signal.name)
+        LOG("Second signal:" .. condition.second_signal.name)
         ans[GET_SIGNAL_TYPED_NAME(condition.second_signal)] = true
         ans[condition.second_signal.type] = true
     end
@@ -31,7 +32,7 @@ end
 
 local function inserter_inputs(control_behavior)
     local ans = {}
-    log("Inserter: ".. INSERTER_MODES[control_behavior.circuit_mode_of_operation])
+    LOG("Inserter: ".. INSERTER_MODES[control_behavior.circuit_mode_of_operation])
     if control_behavior.circuit_mode_of_operation == defines.control_behavior.inserter.circuit_mode_of_operation.enable_disable then
         for k,v in pairs(generic_on_off_inputs(control_behavior)) do ans[k] = v end 
     elseif control_behavior.circuit_mode_of_operation == defines.control_behavior.inserter.circuit_mode_of_operation.set_filters then 
@@ -180,7 +181,7 @@ local input_fetchers = {
 
 function FETCH_INPUT(entity)
     local behavior = entity.get_control_behavior()
-    log("control_behavior: " .. entity.prototype.name .. ": " .. BEHAVIOR_TYPES[behavior.type])
+    LOG("control_behavior: " .. entity.prototype.name .. ": " .. BEHAVIOR_TYPES[behavior.type])
     local ans =  input_fetchers[behavior.type](behavior, entity)
     ans["virtual"] = nil
     return ans

@@ -1,4 +1,5 @@
 require("consts")
+require("log")
 function CHECK_IO(entity)
     local errors = {}
     if IO_SEPARATED[entity.get_control_behavior().type] ~= nil then
@@ -105,7 +106,7 @@ function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
     local errors = {}
     -- get list of connected networks to entity
     local connected_networks = GET_CONNECTED_NETWORKS(entity)
-    log("connected_networks: " .. serpent.line(connected_networks))
+    LOG("connected_networks: " .. serpent.line(connected_networks))
     -- check inputs
     for signal, _ in pairs(entity_inputs) do
         -- check if signal is matched at at least one network
@@ -137,7 +138,7 @@ function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
     end
     -- check outputs
     for signal, _ in pairs(entity_outputs) do
-        log(signal)
+        LOG(signal)
         -- check if signal is matched at at least one network
         local matched = false
         for network_id, _ in pairs(connected_networks.output) do 
