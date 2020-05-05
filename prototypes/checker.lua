@@ -2,7 +2,7 @@ data:extend({
     {
       type = "selection-tool",
       name = "circuit-checker",
-      icon = "__circuit-checker__/graphics/icon.png",
+      icon = "__circuit-checker__/graphics/icon-small.png",
       icon_size = 32,
       stack_size = 1,
       subgroup = "tool",
@@ -17,7 +17,7 @@ data:extend({
       action = "create-blueprint-item",
       associated_control_input = "give-circuit-checker",
       disabled_small_icon = {
-        filename = "__circuit-checker__/graphics/icon.png",
+        filename = "__circuit-checker__/graphics/icon-small.png",
         flags = {
           "gui-icon"
         },
@@ -27,7 +27,7 @@ data:extend({
         size = 24
       },
       icon = {
-        filename = "__circuit-checker__/graphics/icon.png",
+        filename = "__circuit-checker__/graphics/icon-small.png",
         flags = {
           "gui-icon"
         },
@@ -42,7 +42,7 @@ data:extend({
       },
       name = "check-circuit",
       small_icon = {
-        filename = "__circuit-checker__/graphics/icon.png",
+        filename = "__circuit-checker__/graphics/icon-small.png",
         flags = {
           "gui-icon"
         },
