@@ -7,6 +7,7 @@
         "rendering",
         "game",
         "data",
-        "table_size"
+        "table_size",
+        "settings"
     ]
 }
