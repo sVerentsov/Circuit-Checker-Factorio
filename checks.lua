@@ -102,6 +102,26 @@ local function contain_color(outputs)
     return false
 end
 
+local function check_input(signal, connected_networks, networks)
+    local matched = false
+    for network_id, _ in pairs(connected_networks.input) do
+        if is_input_matched(signal, networks[network_id].output) then
+            matched = true
+        end
+    end
+    return matched
+end
+
+local function check_color(connected_networks, networks)
+    local matched = false
+    for network_id, _ in pairs(connected_networks.input) do
+        if not contain_color(networks[network_id].output) then
+            matched = true
+        end
+    end
+    return matched
+end
+
 function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
     local errors = {}
     -- get list of connected networks to entity
@@ -110,30 +130,22 @@ function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
     -- check inputs
     for signal, _ in pairs(entity_inputs) do
         -- check if signal is matched at at least one network
-        local matched = false
-        for network_id, _ in pairs(connected_networks.input) do
-            if signal == "color" then
-                matched = true
-                if not contain_color(networks[network_id].output) then
-                    table.insert(errors,
-                    {
-                        level="I",
-                        msg='"Use colors" is enabled but no color output is found'
-                    })
-                end
-            else
-                if is_input_matched(signal, networks[network_id].output) then
-                    matched = true
-                end
+        if signal == "color" then
+            if not check_color(connected_networks, networks) then
+                table.insert(errors,
+                {
+                    level="I",
+                    msg='"Use colors" is enabled but no color output is found'
+                })
             end
-        end
-        -- if not matched, create error.
-        if not matched then
-            table.insert(errors,
-            {
-                level="E",
-                msg="Input " .. GET_PRETTY_SIGNAL(signal) .. " is required, but there is no such output in connected networks"
-            })
+        else
+            if not check_input(signal, connected_networks, networks) then
+                table.insert(errors,
+                {
+                    level="E",
+                    msg="Input " .. GET_PRETTY_SIGNAL(signal) .. " is required, but there is no such output in connected networks"
+                })
+            end
         end
     end
     -- check outputs
