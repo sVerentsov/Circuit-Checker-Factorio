@@ -1,5 +1,5 @@
 function LOG(str)
-    if settings.player["enable-logging"].value then
+    if settings.global["enable-logging"].value then
         log(str)
     end
 end
