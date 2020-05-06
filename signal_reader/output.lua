@@ -28,12 +28,28 @@ local function logistic_container_outputs(control_behavior)
 	return {}
 end
 
+local function is_roboport_read_logistics(control_behavior)
+    if string.find(game.active_mods["base"], "0.18") then
+        return control_behavior.read_logistics
+      else
+        return control_behavior.mode_of_operations == defines.control_behavior.roboport.circuit_mode_of_operation.read_logistics
+      end
+end
+
+local function is_roboport_read_robot_stats(control_behavior)
+    if string.find(game.active_mods["base"], "0.18") then
+        return control_behavior.read_robot_stats
+      else
+        return control_behavior.mode_of_operations == defines.control_behavior.roboport.circuit_mode_of_operation.read_robot_stats
+      end
+end
+
 local function roboport_outputs(control_behavior)
     local ans = {}
-    -- TODO: fix for 0.18 (mode_of_operations replaced by read_logistics and read_robot_stats)
-    if control_behavior.mode_of_operations == defines.control_behavior.roboport.circuit_mode_of_operation.read_logistics then
+    if is_roboport_read_logistics(control_behavior) then
         ans["any-item"] = true
-    else
+    end
+    if is_roboport_read_robot_stats(control_behavior) then
         local any_output = false
         if control_behavior.available_logistic_output_signal ~= nil then
             any_output = true
@@ -116,7 +132,6 @@ end
 local function constant_combinator_outputs(control_behavior)
     local ans = {}
     local is_any = false
-    -- TODO: check parameters.parameters in 0.18
     for _, param in  pairs(control_behavior.parameters.parameters) do
         if param ~= nil and param.signal ~= nil and param.signal.name ~= nil then
             is_any = true

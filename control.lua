@@ -24,9 +24,20 @@ local function print_errors(errors, player)
             err.msg
         )
     end
+    if table_size(errors) == 0 then
+        player.print("[img=virtual-signal/signal-check] No vulnerabilities found!")
+    end
 end
 
-local function label_entities(errors, entities)
+local function get_surface(event)
+    if string.find(game.active_mods["base"], "0.18") then
+        return event.surface
+    else
+        return "nauvis" -- no surface on event before 0.18
+    end
+end
+
+local function label_entities(errors, entities, event)
     local max_level = {}
     for _, err in pairs(errors) do 
         if max_level[err.index] == nil then
@@ -41,7 +52,7 @@ local function label_entities(errors, entities)
             color = LEVEL_COLORS[max_level[i]]
         end
         rendering.draw_text{text=i,
-            surface="nauvis", -- TODO take surface from event (0.18)
+            surface=get_surface(event),
             target=entity,
             color=color,
             only_in_alt_mode=true
@@ -54,6 +65,10 @@ local function get_selected(event)
     rendering.clear("circuit-checker")
     local circuit_entities = {}
     for _, entity in pairs(event.entities) do
+        if entity.surface.name ~= "nauvis" and not string.find(game.active_mods["base"], "0.18") then
+            player.print("Other surfaces than default are supported only in 0.18+.")
+            return
+        end
         local behavior = entity.get_control_behavior()
         if behavior ~= nil then
             table.insert(circuit_entities, entity)
@@ -110,7 +125,7 @@ local function get_selected(event)
         end
     end
     print_errors(errors, player)
-    label_entities(errors, circuit_entities)
+    label_entities(errors, circuit_entities, event)
 end
 
 script.on_event(defines.events.on_player_selected_area, get_selected)
