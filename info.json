@@ -4,7 +4,7 @@
     "contact": "north1605@list.ru",
     "name": "circuit-checker",
     "title": "Circuit Checker",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "This mod helps in troubleshooting your circuit networks. Adds shortcut (Alt-C by default) to find possible circuit flaws in selected area. Finds unmatched inputs, unused outputs, missed wire connections.",
     "dependencies": ["base >= 0.17.79"]
 }
