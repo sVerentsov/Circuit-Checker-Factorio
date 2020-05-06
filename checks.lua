@@ -115,7 +115,7 @@ end
 local function check_color(connected_networks, networks)
     local matched = false
     for network_id, _ in pairs(connected_networks.input) do
-        if not contain_color(networks[network_id].output) then
+        if contain_color(networks[network_id].output) then
             matched = true
         end
     end
