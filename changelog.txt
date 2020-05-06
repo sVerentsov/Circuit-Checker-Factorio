@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 2020-05-06
+  Fixes:
+    - Fixed lamp info message when connected to both green and red wires
+    - Logging setting now works
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 2020-05-05
+  Features:
+    - Initial Release
