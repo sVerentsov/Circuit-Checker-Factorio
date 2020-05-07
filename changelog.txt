@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.18.2
+Date: 2020-05-07
+  Changes:
+    - Fixed wrong input matching for combinators where input was ignored when used as output (thanks to ImmoralFox)
+---------------------------------------------------------------------------------------------------
 Version: 0.17.5
 Date: 2020-05-07
   Changes:

@@ -25,6 +25,11 @@ Adds shortcut (Alt-C by default) to find possible flaws in circuit. Finds unmatc
   ![Train condition example](demo_images/train-condition.png)
  - Mod compatibility - this mod uses "Control behavior" attributes of entities, not entitites themselves. Therefore, mods that make use of curcuit network must be compatible. If you find a mod that does not work, please report via mod discussion or issues on Github.
 
+## Known Issues
+ - Disconnected nixie tubes near connect report error
+ - Stations from LTN are not processed correctly 
+ - Each/Everything processing does not take into account which exact signals can be outputs
+
 ## Feedback
 I would be glad to see any feedback on the mod. 
 Is there an error raised in your network while network is correct?
@@ -34,7 +39,9 @@ I am checking mod discussion and issues on Github.
 
 
 ## TODO
+ - Bug fixes
  - Add localisation to error messages
+ - Enhanced mod support
 
 ## Contribution
 If you would like to help with the development of the mod, you can fork the repo and open PR. In file `test-blueprint-book.txt` you can find blueprint string for circuit networks that I use as unit tests. In these blueprints belts mark expected result: red belt means the entity must raise error, yellow - warning, no belt - info, blue belt - nothing.
