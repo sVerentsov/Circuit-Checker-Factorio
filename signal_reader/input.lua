@@ -102,7 +102,18 @@ end
 
 local function decider_combinator_inputs(control_behavior)
     local condition = control_behavior.parameters.parameters
-    return condition_inputs(condition)
+    local ans = condition_inputs(condition)
+    if condition.output_signal ~= nil then
+        if condition.output_signal.name == "signal-everything" or condition.output_signal.name == "signal-each" then
+            ans[GET_SIGNAL_TYPED_NAME(condition.output_signal)] = true
+            ans[condition.output_signal.type] = true
+        end
+        if condition.copy_count_from_input then
+            ans[GET_SIGNAL_TYPED_NAME(condition.output_signal)] = true
+            ans[condition.output_signal.type] = true
+        end
+    end
+    return ans
 end
 
 local function arithmetic_combinator_inputs(control_behavior)
