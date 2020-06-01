@@ -103,7 +103,7 @@ end
 local function decider_combinator_inputs(control_behavior)
     local condition = control_behavior.parameters.parameters
     local ans = condition_inputs(condition)
-    if condition.output_signal ~= nil then
+    if condition.output_signal ~= nil and condition.output_signal.name ~= nil then
         if condition.output_signal.name == "signal-everything" or condition.output_signal.name == "signal-each" then
             ans[GET_SIGNAL_TYPED_NAME(condition.output_signal)] = true
             ans[condition.output_signal.type] = true
