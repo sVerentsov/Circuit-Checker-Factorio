@@ -1,11 +1,11 @@
 {
     "author": "North",
-    "factorio_version": "0.18",
+    "factorio_version": "0.17",
     "contact": "north1605@list.ru",
     "name": "circuit-checker",
     "title": "Circuit Checker",
     "version": "0.17.6",
     "description": "This mod helps in troubleshooting your circuit networks. Adds shortcut (Alt-C by default) to find possible circuit flaws in selected area. Finds unmatched inputs, unused outputs, missed wire connections.",
-    "dependencies": ["base >= 0.18.22"],
+    "dependencies": ["base >= 0.17.79"],
     "package": {"ignore": ["demo_images/**", "test-blueprint-book.txt"]}
 }
