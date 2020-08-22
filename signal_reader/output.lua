@@ -29,7 +29,7 @@ local function logistic_container_outputs(control_behavior)
 end
 
 local function is_roboport_read_logistics(control_behavior)
-    if string.find(game.active_mods["base"], "0.18") then
+    if string.find(game.active_mods["base"], "1.") then
         return control_behavior.read_logistics
       else
         return control_behavior.mode_of_operations == defines.control_behavior.roboport.circuit_mode_of_operation.read_logistics
@@ -37,7 +37,7 @@ local function is_roboport_read_logistics(control_behavior)
 end
 
 local function is_roboport_read_robot_stats(control_behavior)
-    if string.find(game.active_mods["base"], "0.18") then
+    if string.find(game.active_mods["base"], "1.") then
         return control_behavior.read_robot_stats
       else
         return control_behavior.mode_of_operations == defines.control_behavior.roboport.circuit_mode_of_operation.read_robot_stats
