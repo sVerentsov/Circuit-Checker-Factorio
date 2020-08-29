@@ -53,6 +53,9 @@ local function label_entities(errors, entities)
 end
 
 local function get_selected(event)
+    if event.item ~= "circuit-checker" then
+        return
+    end
     local player = game.players[event.player_index]
     rendering.clear("circuit-checker")
     local circuit_entities = {}

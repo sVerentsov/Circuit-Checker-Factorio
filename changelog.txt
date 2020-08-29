@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 2020-08-29
+  Changes:
+    - Fixed mod trigger on selection tools provided by other mods. Thanks Dominiquini for reporting.
+---------------------------------------------------------------------------------------------------
 Version: 1.0.0
 Date: 2020-08-22
   Changes:
