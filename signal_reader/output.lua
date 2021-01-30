@@ -107,7 +107,7 @@ end
 
 local function decider_combinator_outputs(control_behavior)
     local ans = {}
-    local params = control_behavior.parameters.parameters
+    local params = control_behavior.parameters
     if params.output_signal  ~= nil and params.output_signal.name ~= nil then
         ans[params.output_signal.type] = true
         ans[GET_SIGNAL_TYPED_NAME(params.output_signal)] = true
@@ -119,7 +119,7 @@ end
 
 local function arithmetic_combinator_outputs(control_behavior)
     local ans = {}
-    local params = control_behavior.parameters.parameters
+    local params = control_behavior.parameters
     if params.output_signal ~= nil and params.output_signal.name ~= nil then
         ans[params.output_signal.type] = true
         ans[GET_SIGNAL_TYPED_NAME(params.output_signal)] = true
@@ -132,7 +132,7 @@ end
 local function constant_combinator_outputs(control_behavior)
     local ans = {}
     local is_any = false
-    for _, param in  pairs(control_behavior.parameters.parameters) do
+    for _, param in  pairs(control_behavior.parameters) do
         if param ~= nil and param.signal ~= nil and param.signal.name ~= nil then
             is_any = true
             ans[param.signal.type] = true

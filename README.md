@@ -10,7 +10,7 @@ Adds shortcut (Alt-C by default) to find possible flaws in circuit. Finds unmatc
 
 ## Supported error messages
  - Input is required but not found in connected networks (E)
- - No input/output wires on combinator(E)
+ - No input/output wires on combinator (E)
  - Input not set (E) - shows that some condition is left blank
  - Output not set (E) - shows that output signal is left blank (in accumulator settings, for example)
  - Output unused (W)

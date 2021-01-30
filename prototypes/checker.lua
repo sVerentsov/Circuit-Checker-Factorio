@@ -11,15 +11,21 @@ data:extend({
       selection_mode = {"blueprint"},
       alt_selection_mode = {"blueprint"},
       selection_cursor_box_type = "entity",
-      alt_selection_cursor_box_type = "copy"
+      alt_selection_cursor_box_type = "copy",
+      flags = {
+        "hidden",
+        "not-stackable",
+        "only-in-cursor",
+        "spawnable"
+      }
     },
     {
-      action = "create-blueprint-item",
+      action = "spawn-item",
       associated_control_input = "give-circuit-checker",
       disabled_small_icon = {
         filename = "__circuit-checker__/graphics/icon-small.png",
         flags = {
-          "gui-icon"
+          "icon"
         },
         mipmap_count = 2,
         priority = "extra-high-no-scale",
@@ -29,14 +35,14 @@ data:extend({
       icon = {
         filename = "__circuit-checker__/graphics/icon-small.png",
         flags = {
-          "gui-icon"
+          "icon"
         },
         mipmap_count = 2,
         priority = "extra-high-no-scale",
         scale = 0.5,
         size = 32
       },
-      item_to_create = "circuit-checker",
+      item_to_spawn = "circuit-checker",
       localised_name = {
         "shortcut.name"
       },
@@ -44,7 +50,7 @@ data:extend({
       small_icon = {
         filename = "__circuit-checker__/graphics/icon-small.png",
         flags = {
-          "gui-icon"
+          "icon"
         },
         mipmap_count = 2,
         priority = "extra-high-no-scale",
@@ -56,9 +62,9 @@ data:extend({
       type = "shortcut"
     },
     {
-      action = "create-blueprint-item",
+      action = "spawn-item",
       consuming = "game-only",
-      item_to_create = "circuit-checker",
+      item_to_spawn = "circuit-checker",
       key_sequence = "ALT + C",
       name = "give-circuit-checker",
       type = "custom-input"

@@ -101,7 +101,7 @@ local function train_stop_inputs(control_behavior, entity)
 end
 
 local function decider_combinator_inputs(control_behavior)
-    local condition = control_behavior.parameters.parameters
+    local condition = control_behavior.parameters
     local ans = condition_inputs(condition)
     if condition.output_signal ~= nil and condition.output_signal.name ~= nil then
         if condition.output_signal.name == "signal-everything" or condition.output_signal.name == "signal-each" then
@@ -117,7 +117,7 @@ local function decider_combinator_inputs(control_behavior)
 end
 
 local function arithmetic_combinator_inputs(control_behavior)
-    local condition = control_behavior.parameters.parameters
+    local condition = control_behavior.parameters
     return condition_inputs(condition)
 end
 
