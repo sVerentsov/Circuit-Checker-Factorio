@@ -102,6 +102,14 @@ local function train_stop_outputs(control_behavior, entity)
             ans["blank"] = true
         end
     end
+    if control_behavior.read_trains_count then
+        if control_behavior.trains_count_signal ~= nil then
+            ans[control_behavior.trains_count_signal.type] = true
+            ans[GET_SIGNAL_TYPED_NAME(control_behavior.trains_count_signal)] = true
+        else
+            ans["blank"] = true
+        end
+    end
 	return ans
 end
 

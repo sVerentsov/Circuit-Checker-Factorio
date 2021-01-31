@@ -77,6 +77,15 @@ local function train_stop_inputs(control_behavior, entity)
     if control_behavior.enable_disable then
         for k,v in pairs(generic_on_off_inputs(control_behavior)) do ans[k] = v end
     end
+    if control_behavior.set_trains_limit then
+        if control_behavior.trains_limit_signal == nil then
+            ans["blank"] = true
+        else
+            ans[GET_SIGNAL_TYPED_NAME(control_behavior.trains_limit_signal)] = true
+            ans[control_behavior.trains_limit_signal.type] = true
+        end
+    
+    end
     if control_behavior.send_to_train then
         -- find all trains with this station, get their circuit conditions and get inputs of those conditions
         for _, train in pairs(entity.get_train_stop_trains()) do
