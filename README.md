@@ -1,6 +1,6 @@
 # Circuit Checker
 
-This is mod for Factorio.
+This is a mod for Factorio.
 
 This mod helps in troubleshooting your circuit networks.
 Adds shortcut (Alt-C by default) to find possible flaws in circuit. Finds unmatched inputs, unused outputs, missed wire connections.
@@ -40,8 +40,7 @@ I am checking mod discussion and issues on Github.
 
 ## TODO
  - Bug fixes
- - Add localisation to error messages
  - Enhanced mod support
 
 ## Contribution
-If you would like to help with the development of the mod, you can fork the repo and open PR. In file `test-blueprint-book.txt` you can find blueprint string for circuit networks that I use as unit tests. In these blueprints belts mark expected result: red belt means the entity must raise error, yellow - warning, no belt - info, blue belt - nothing.
+If you would like to help with the development of the mod or adding a translation, you can fork the repo and open PR. In file `test-blueprint-book.txt` you can find blueprint string for circuit networks that I use as unit tests. In these blueprints belts mark expected result: red belt means the entity must raise error, yellow - warning, no belt - info, blue belt - nothing.

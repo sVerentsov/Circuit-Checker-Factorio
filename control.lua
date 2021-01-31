@@ -8,30 +8,30 @@ require("networks")
 local function print_errors(errors, player)
     for _, err in pairs(errors) do
         LOG(serpent.line(err))
-        local str = ""
+        local prefix = ""
         if LEVEL_COLORS[err.level] ~= nil then
-            str = str .. "[color=" ..
-                LEVEL_COLORS[err.level][1] .. "," ..
-                LEVEL_COLORS[err.level][2] .. "," ..
-                LEVEL_COLORS[err.level][3] ..
-                "]" .. err.level .. "[/color]: "
-        else 
-            str = str .. err.level .. ": "
+            prefix = prefix .. "[color=" .. LEVEL_COLORS[err.level][1] .. "," .. LEVEL_COLORS[err.level][2] .. "," ..
+                         LEVEL_COLORS[err.level][3] .. "]" .. err.level .. "[/color]: "
+        else
+            prefix = prefix .. err.level .. ": "
         end
-        player.print(str ..
-            "[img=entity/" .. err.entity.prototype.name .. "] " ..
-            err.index .. ": "..
-            err.msg
-        )
+        prefix = prefix .. "[img=entity/" .. err.entity.prototype.name .. "] " .. err.index .. ": "
+        local print_table = {err.msg, prefix}
+        if err.params ~= nil then
+            for _, param in pairs(err.params) do
+                table.insert(print_table, param)
+            end
+        end
+        player.print(print_table)
     end
     if table_size(errors) == 0 then
-        player.print("[img=virtual-signal/signal-check] No vulnerabilities found!")
+        player.print({"message.no_vulnerabilities", "[img=virtual-signal/signal-check]"})
     end
 end
 
 local function label_entities(errors, entities)
     local max_level = {}
-    for _, err in pairs(errors) do 
+    for _, err in pairs(errors) do
         if max_level[err.index] == nil then
             max_level[err.index] = err.level
         elseif LEVELS[max_level[err.index]] < LEVELS[err.level] then
@@ -39,15 +39,16 @@ local function label_entities(errors, entities)
         end
     end
     for i, entity in pairs(entities) do
-        local color = {255, 255, 255} 
+        local color = {255, 255, 255}
         if LEVEL_COLORS[max_level[i]] ~= nil then
             color = LEVEL_COLORS[max_level[i]]
         end
-        rendering.draw_text{text=i,
-            surface=entity.surface,
-            target=entity,
-            color=color,
-            only_in_alt_mode=true
+        rendering.draw_text {
+            text = i,
+            surface = entity.surface,
+            target = entity,
+            color = color,
+            only_in_alt_mode = true
         }
     end
 end
@@ -81,20 +82,35 @@ local function get_selected(event)
 
         -- check if required input/output signal settings are set up
         if inputs["blank"] == true then
-            local msg = "One or more inputs not set"
+            local msg = "message.no_input_set"
             if entity.get_control_behavior().type == defines.control_behavior.type.train_stop then
-                msg = "One or more inputs not set. Check assigned trains"
+                msg = "message.no_input_set_trains"
             end
-            table.insert(errors, {level = "E", index = i, entity = entity, msg = msg})
+            table.insert(errors, {
+                level = "E",
+                index = i,
+                entity = entity,
+                msg = msg
+            })
         end
         if outputs["blank"] == true then
-            table.insert(errors, {level = "E", index = i, entity = entity, msg = "Output not set"})
+            table.insert(errors, {
+                level = "E",
+                index = i,
+                entity = entity,
+                msg = "message.no_outputs"
+            })
         end
 
         -- check if combinators are connected on input and output
         local io_errors = CHECK_IO(entity)
         for _, err in pairs(io_errors) do
-            table.insert(errors, {level = "E", index = i, entity = entity, msg = err})
+            table.insert(errors, {
+                level = "E",
+                index = i,
+                entity = entity,
+                msg = err
+            })
         end
 
         local entity_networks = GET_NETWORKS(entity, inputs, outputs)
@@ -111,7 +127,8 @@ local function get_selected(event)
                 level = err.level,
                 index = i,
                 entity = entity,
-                msg = err.msg
+                msg = err.msg,
+                params=err.params
             })
         end
     end
@@ -120,5 +137,4 @@ local function get_selected(event)
 end
 
 script.on_event(defines.events.on_player_selected_area, get_selected)
-
 

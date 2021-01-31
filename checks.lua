@@ -14,10 +14,10 @@ function CHECK_IO(entity)
             end
         end
         if not has_input then
-            table.insert(errors, "No input wires")
+            table.insert(errors, "message.no_input_wires")
         end
         if not has_output then
-            table.insert(errors, "No output wires")
+            table.insert(errors, "message.no_output_wires")
         end
     end
     return errors
@@ -135,7 +135,7 @@ function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
                 table.insert(errors,
                 {
                     level="I",
-                    msg='"Use colors" is enabled but no color output is found'
+                    msg="message.no_color_for_use_colors"
                 })
             end
         else
@@ -143,7 +143,8 @@ function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
                 table.insert(errors,
                 {
                     level="E",
-                    msg="Input " .. GET_PRETTY_SIGNAL(signal) .. " is required, but there is no such output in connected networks"
+                    msg="message.input_required",
+                    params={GET_PRETTY_SIGNAL(signal)}
                 })
             end
         end
@@ -163,7 +164,8 @@ function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
             table.insert(errors,
             {
                 level="W",
-                msg="Output " .. GET_PRETTY_SIGNAL(signal) .. " is unused"
+                msg="message.output_unused",
+                params={GET_PRETTY_SIGNAL(signal)}
             })
         end
     end
