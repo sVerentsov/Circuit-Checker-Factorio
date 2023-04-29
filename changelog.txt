@@ -1,8 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.2
+Date: 2023-04-29
+  Changes:
+    - Checker now ignores logistic network
+    - Not connected Nixie Tubes do not raise errors
+    - Fix crashes with Circuit HUD V2 mod
+---------------------------------------------------------------------------------------------------
 Version: 1.1.1
 Date: 2021-02-01
   Features:
-    - Messages are moved to locale config, making translatins possible.
+    - Messages are moved to locale config, making translations possible.
     - Added Russian translation
     - Added Train limit and Train count support for train stops
 ---------------------------------------------------------------------------------------------------

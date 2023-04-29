@@ -2,7 +2,7 @@ require("utils")
 require("log")
 
 local function container_outputs(control_behavior)
-    return {["any-item"] = true}
+    return { ["any-item"] = true }
 end
 
 local function generic_on_off_outputs(control_behavior)
@@ -11,7 +11,7 @@ end
 
 local function inserter_outputs(control_behavior)
     if control_behavior.circuit_read_hand_contents then
-        return {["any-item"] = true}
+        return { ["any-item"] = true }
     else
         return {}
     end
@@ -23,25 +23,27 @@ end
 
 local function logistic_container_outputs(control_behavior)
     if control_behavior.circuit_mode_of_operation == defines.control_behavior.logistic_container.circuit_mode_of_operation.send_contents then
-        return {["any-item"] = true }
+        return { ["any-item"] = true }
     end
-	return {}
+    return {}
 end
 
 local function is_roboport_read_logistics(control_behavior)
     if string.find(game.active_mods["base"], "1.") then
         return control_behavior.read_logistics
-      else
-        return control_behavior.mode_of_operations == defines.control_behavior.roboport.circuit_mode_of_operation.read_logistics
-      end
+    else
+        return control_behavior.mode_of_operations ==
+            defines.control_behavior.roboport.circuit_mode_of_operation.read_logistics
+    end
 end
 
 local function is_roboport_read_robot_stats(control_behavior)
     if string.find(game.active_mods["base"], "1.") then
         return control_behavior.read_robot_stats
-      else
-        return control_behavior.mode_of_operations == defines.control_behavior.roboport.circuit_mode_of_operation.read_robot_stats
-      end
+    else
+        return control_behavior.mode_of_operations ==
+            defines.control_behavior.roboport.circuit_mode_of_operation.read_robot_stats
+    end
 end
 
 local function roboport_outputs(control_behavior)
@@ -79,7 +81,7 @@ local function roboport_outputs(control_behavior)
 end
 
 local function storage_tank_outputs(control_behavior)
-    return {["any-fluid"] = true}
+    return { ["any-fluid"] = true }
 end
 
 local function train_stop_outputs(control_behavior, entity)
@@ -98,7 +100,7 @@ local function train_stop_outputs(control_behavior, entity)
         if control_behavior.stopped_train_signal ~= nil then
             ans[control_behavior.stopped_train_signal.type] = true
             ans[GET_SIGNAL_TYPED_NAME(control_behavior.stopped_train_signal)] = true
-        else 
+        else
             ans["blank"] = true
         end
     end
@@ -110,16 +112,16 @@ local function train_stop_outputs(control_behavior, entity)
             ans["blank"] = true
         end
     end
-	return ans
+    return ans
 end
 
 local function decider_combinator_outputs(control_behavior)
     local ans = {}
     local params = control_behavior.parameters
-    if params.output_signal  ~= nil and params.output_signal.name ~= nil then
+    if params.output_signal ~= nil and params.output_signal.name ~= nil then
         ans[params.output_signal.type] = true
         ans[GET_SIGNAL_TYPED_NAME(params.output_signal)] = true
-    else 
+    else
         ans["blank"] = true
     end
     return ans
@@ -131,16 +133,19 @@ local function arithmetic_combinator_outputs(control_behavior)
     if params.output_signal ~= nil and params.output_signal.name ~= nil then
         ans[params.output_signal.type] = true
         ans[GET_SIGNAL_TYPED_NAME(params.output_signal)] = true
-    else 
+    else
         ans["blank"] = true
     end
     return ans
 end
 
 local function constant_combinator_outputs(control_behavior)
+    if control_behavior.parameters == nil then
+        return { ["blank"] = true }
+    end
     local ans = {}
     local is_any = false
-    for _, param in  pairs(control_behavior.parameters) do
+    for _, param in pairs(control_behavior.parameters) do
         if param ~= nil and param.signal ~= nil and param.signal.name ~= nil then
             is_any = true
             ans[param.signal.type] = true
@@ -166,10 +171,10 @@ local function accumulator_outputs(control_behavior)
     if control_behavior.output_signal ~= nil then
         ans[control_behavior.output_signal.type] = true
         ans[GET_SIGNAL_TYPED_NAME(control_behavior.output_signal)] = true
-    else 
+    else
         ans["blank"] = true
     end
-	return ans
+    return ans
 end
 
 local function rail_signal_outputs(control_behavior)
@@ -233,11 +238,11 @@ local function wall_outputs(control_behavior)
         if control_behavior.output_signal ~= nil then
             ans[control_behavior.output_signal.type] = true
             ans[GET_SIGNAL_TYPED_NAME(control_behavior.output_signal)] = true
-        else 
+        else
             ans["blank"] = true
         end
     end
-	return ans
+    return ans
 end
 
 local function mining_drill_outputs(control_behavior)
@@ -245,7 +250,7 @@ local function mining_drill_outputs(control_behavior)
     if control_behavior.circuit_read_resources then
         ans["any-item"] = true
     end
-	return ans
+    return ans
 end
 
 local function programmable_speaker_outputs(control_behavior)
@@ -279,6 +284,13 @@ function FETCH_OUTPUT(entity)
     local behavior = entity.get_control_behavior()
     LOG("control_behavior: " .. entity.prototype.name .. ": " .. BEHAVIOR_TYPES[behavior.type])
     local ans = output_fetchers[behavior.type](behavior, entity)
+    if ENTITIES_ALLOW_NO_OUTPUTS[entity.prototype.name] ~= nil then
+        ans['blank'] = false
+    end
+    if ENTITIES_MATCH_ALL_INPUT[entity.prototype.name] then
+        ans['signal-anything:virtual'] = 1
+    end
+
     ans["virtual"] = nil
     return ans
 end

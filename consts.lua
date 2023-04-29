@@ -10,8 +10,8 @@ WIRES = {
 }
 
 LEVEL_COLORS = {
-    E = {255, 66, 66},
-    W = {237, 232, 97}
+    E = { 255, 66, 66 },
+    W = { 237, 232, 97 }
 }
 
 LEVELS = {
@@ -40,4 +40,24 @@ COLORS = {
     ["signal-red:virtual"] = true,
     ["signal-white:virtual"] = true,
     ["signal-yellow:virtual"] = true
+}
+
+ENTITIES_ALLOW_NO_OUTPUTS = {
+    ['hud-combinator'] = 1
+}
+
+ENTITIES_ALLOW_NO_INPUTS = {
+}
+
+ENTITIES_IGNORE_IF_NO_WIRES = {
+    ["nixie-tube-small"] = 1,
+    ["nixie-tube-alpha"] = 1,
+    ['nixie-tube'] = 1
+}
+
+ENTITIES_MATCH_ALL_INPUT = {
+}
+
+ENTITIES_MATCH_ALL_OUTPUT = {
+    ["hud-combinator"] = 1
 }
