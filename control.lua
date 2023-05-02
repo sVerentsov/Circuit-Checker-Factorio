@@ -1,6 +1,7 @@
 require("consts")
 require("signal_reader.input")
 require("signal_reader.output")
+require("utils.label_entities")
 require("checks")
 require("log")
 require("networks")
@@ -26,30 +27,6 @@ local function print_errors(errors, player)
     end
     if table_size(errors) == 0 then
         player.print({ "message.no_vulnerabilities", "[img=virtual-signal/signal-check]" })
-    end
-end
-
-local function label_entities(errors, entities)
-    local max_level = {}
-    for _, err in pairs(errors) do
-        if max_level[err.index] == nil then
-            max_level[err.index] = err.level
-        elseif LEVELS[max_level[err.index]] < LEVELS[err.level] then
-            max_level[err.index] = err.level
-        end
-    end
-    for i, entity in pairs(entities) do
-        local color = { 255, 255, 255 }
-        if LEVEL_COLORS[max_level[i]] ~= nil then
-            color = LEVEL_COLORS[max_level[i]]
-        end
-        rendering.draw_text {
-            text = i,
-            surface = entity.surface,
-            target = entity,
-            color = color,
-            only_in_alt_mode = true
-        }
     end
 end
 
@@ -135,7 +112,7 @@ local function get_selected(event)
         end
     end
     print_errors(errors, player)
-    label_entities(errors, circuit_entities)
+    LABEL_ENTITIES(errors, circuit_entities)
 end
 
 script.on_event(defines.events.on_player_selected_area, get_selected)

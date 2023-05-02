@@ -23,6 +23,7 @@ Adds shortcut (Alt-C by default) to find possible flaws in circuit. Finds unmatc
  ![Train contains example](demo_images/train_contains_error.png)
  - Checks train circuit conditions. If train uses some signal in condition to leave station, but there is no such signal on train station, an error will be raised.
   ![Train condition example](demo_images/train-condition.png)
+ - Shows enabled circuit modes in alt-mode
  - Mod compatibility – this mod uses "Control behavior" attributes of entities, not entitites themselves. Therefore, mods that make use of curcuit network must be compatible. If you find a mod that does not work, please report via mod discussion or issues on Github.
 
 ## Known Issues
