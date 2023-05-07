@@ -5,23 +5,27 @@ local function container_inputs(control_behavior)
     return {} -- container can not use signals, only output them
 end
 
+local function one_condition_input(signal, constant)
+    local ans = {}
+    log(signal)
+    log(constant)
+    if signal == nil or signal.name == nil then
+        if constant == nil then
+            ans["blank"] = true
+        end
+    else
+        ans[GET_SIGNAL_TYPED_NAME(signal)] = true
+        ans[signal.type] = true
+    end
+    return ans
+end
+
 local function condition_inputs(condition)
     local ans = {}
-    if condition.first_signal == nil or condition.first_signal.name == nil then
-        LOG("First signal: nil")
-        ans["blank"] = true
-    else
-        LOG("First signal: " .. condition.first_signal.name)
-        ans[GET_SIGNAL_TYPED_NAME(condition.first_signal)] = true
-        ans[condition.first_signal.type] = true
-    end
-    if condition.second_signal == nil then
-        LOG("Second signal: nil")
-    else
-        LOG("Second signal:" .. condition.second_signal.name)
-        ans[GET_SIGNAL_TYPED_NAME(condition.second_signal)] = true
-        ans[condition.second_signal.type] = true
-    end
+    local inp1 = one_condition_input(condition.first_signal, nil)
+    for k, v in pairs(inp1) do ans[k] = v end
+    local inp2 = one_condition_input(condition.second_signal, condition.constant)
+    for k, v in pairs(inp2) do ans[k] = v end
     return ans
 end
 
@@ -117,8 +121,10 @@ local function decider_combinator_inputs(control_behavior)
             ans[condition.output_signal.type] = true
         end
         if condition.copy_count_from_input then
-            ans[GET_SIGNAL_TYPED_NAME(condition.output_signal)] = true
-            ans[condition.output_signal.type] = true
+            if condition.first_signal.name ~= "signal-each" then
+                ans[GET_SIGNAL_TYPED_NAME(condition.output_signal)] = true
+                ans[condition.output_signal.type] = true
+            end
         end
     end
     return ans
@@ -126,7 +132,12 @@ end
 
 local function arithmetic_combinator_inputs(control_behavior)
     local condition = control_behavior.parameters
-    return condition_inputs(condition)
+    local ans = {}
+    local inp1 = one_condition_input(condition.first_signal, condition.first_constant)
+    for k, v in pairs(inp1) do ans[k] = v end
+    local inp2 = one_condition_input(condition.second_signal, condition.second_constant)
+    for k, v in pairs(inp2) do ans[k] = v end
+    return ans
 end
 
 local function constant_combinator_inputs(control_behavior)
@@ -235,7 +246,7 @@ function IGNORE_ENTITY(entity)
     local behavior = entity.get_control_behavior()
 
     -- if no io is allowed (for modded entities) and no wires connected, ignore this entity
-    if ENTITIES_IGNORE_IF_NO_WIRES[entity.prototype.name] ~= nil and not has_wires(entity) then 
+    if ENTITIES_IGNORE_IF_NO_WIRES[entity.prototype.name] ~= nil and not has_wires(entity) then
         return true
     end
     -- if the entity is not on_off, never ignore

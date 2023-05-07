@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.4
+Date: 2023-05-07
+  Changes:
+    - Fixed false positive when first argument to arithmetic combinator is a constant
+    - Fixed false positive when output in decider combinator is "Copy output count", but first input is "Each"
+---------------------------------------------------------------------------------------------------
 Version: 1.1.3
 Date: 2023-05-03
   Features:
