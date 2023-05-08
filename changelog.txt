@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.5
+Date: 2023-05-08
+  Features:
+    - Added GUI for showing errors instead of console. Click on a message to move camera to the entity.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.4
 Date: 2023-05-07
   Changes:

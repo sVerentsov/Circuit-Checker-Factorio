@@ -2,33 +2,11 @@ require("consts")
 require("signal_reader.input")
 require("signal_reader.output")
 require("utils.label_entities")
+require("utils.gui")
+require("utils.global")
 require("checks")
 require("log")
 require("networks")
-
-local function print_errors(errors, player)
-    for _, err in pairs(errors) do
-        LOG(serpent.line(err))
-        local prefix = ""
-        if LEVEL_COLORS[err.level] ~= nil then
-            prefix = prefix .. "[color=" .. LEVEL_COLORS[err.level][1] .. "," .. LEVEL_COLORS[err.level][2] .. "," ..
-                LEVEL_COLORS[err.level][3] .. "]" .. err.level .. "[/color]: "
-        else
-            prefix = prefix .. err.level .. ": "
-        end
-        prefix = prefix .. "[img=entity/" .. err.entity.prototype.name .. "] " .. err.index .. ": "
-        local print_table = { err.msg, prefix }
-        if err.params ~= nil then
-            for _, param in pairs(err.params) do
-                table.insert(print_table, param)
-            end
-        end
-        player.print(print_table)
-    end
-    if table_size(errors) == 0 then
-        player.print({ "message.no_vulnerabilities", "[img=virtual-signal/signal-check]" })
-    end
-end
 
 local function get_selected(event)
     if event.item ~= "circuit-checker" then
@@ -111,8 +89,16 @@ local function get_selected(event)
             })
         end
     end
-    print_errors(errors, player)
+    if table_size(errors) == 0 then
+        player.print({ "message.no_vulnerabilities", "[img=virtual-signal/signal-check]" })
+    else
+        SET_ERRORS(player.index, errors)
+    end
+    SHOW_GUI(errors, player)
     LABEL_ENTITIES(errors, circuit_entities)
 end
 
 script.on_event(defines.events.on_player_selected_area, get_selected)
+script.on_configuration_changed(function(e)
+    CLOSE_ALL_GUI()
+end)
