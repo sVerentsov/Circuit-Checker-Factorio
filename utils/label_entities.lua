@@ -179,7 +179,7 @@ local function concat_icons(icons)
 end
 
 
-function LABEL_ENTITIES(errors, entities)
+function LABEL_ENTITIES(errors, entities, visible_ids)
     local max_level = {}
     for _, err in pairs(errors) do
         if max_level[err.index] == nil then
@@ -189,42 +189,44 @@ function LABEL_ENTITIES(errors, entities)
         end
     end
     for i, entity in pairs(entities) do
-        local color = { 255, 255, 255 }
-        if LEVEL_COLORS[max_level[i]] ~= nil then
-            color = LEVEL_COLORS[max_level[i]]
-        end
-        local control_behaviour = entity.get_control_behavior()
-        local fetcher = icon_fetchers[control_behaviour.type]
-        local icons = {}
-        if fetcher ~= nil then
-            icons = fetcher(control_behaviour)
-        end
-
-        rendering.draw_text {
-            text = i,
-            surface = entity.surface,
-            target = entity,
-            color = color,
-            only_in_alt_mode = true,
-            alignment = "center",
-            vertical_alignment = "top",
-        }
-        if table_size(icons) ~= 0 then
-            local scale = 1
-            if table_size(icons) > 2 then
-                scale = 0.5
+        if visible_ids[entity.unit_number] then
+            local color = { 255, 255, 255 }
+            if LEVEL_COLORS[max_level[i]] ~= nil then
+                color = LEVEL_COLORS[max_level[i]]
             end
+            local control_behaviour = entity.get_control_behavior()
+            local fetcher = icon_fetchers[control_behaviour.type]
+            local icons = {}
+            if fetcher ~= nil then
+                icons = fetcher(control_behaviour)
+            end
+
             rendering.draw_text {
-                text = concat_icons(icons),
+                text = i,
                 surface = entity.surface,
                 target = entity,
-                only_in_alt_mode = true,
-                use_rich_text = true,
-                alignment = "center",
-                vertical_alignment = "bottom",
                 color = color,
-                scale = scale
+                only_in_alt_mode = true,
+                alignment = "center",
+                vertical_alignment = "top",
             }
+            if table_size(icons) ~= 0 then
+                local scale = 1
+                if table_size(icons) > 2 then
+                    scale = 0.5
+                end
+                rendering.draw_text {
+                    text = concat_icons(icons),
+                    surface = entity.surface,
+                    target = entity,
+                    only_in_alt_mode = true,
+                    use_rich_text = true,
+                    alignment = "center",
+                    vertical_alignment = "bottom",
+                    color = color,
+                    scale = scale
+                }
+            end
         end
     end
 end

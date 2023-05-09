@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.6
+Date: 2023-05-09
+  Features:
+    - Checker now can check not only selected entities, but also the ones that are connected to selected.
+    - Added new setting to choose behavior for connected, but not selected entities.
+  Changes:
+    - Small fixes for GUI
+---------------------------------------------------------------------------------------------------
 Version: 1.1.5
 Date: 2023-05-08
   Features:

@@ -7,8 +7,6 @@ end
 
 local function one_condition_input(signal, constant)
     local ans = {}
-    log(signal)
-    log(constant)
     if signal == nil or signal.name == nil then
         if constant == nil then
             ans["blank"] = true

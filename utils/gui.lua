@@ -56,9 +56,13 @@ local function create_error_list(frame, errors)
     })
 end
 
-function SHOW_GUI(errors, player)
+function HIDE_GUI(player)
     local parent = player.gui.left
     parent.clear()
+end
+
+function SHOW_GUI(errors, player)
+    local parent = player.gui.left
     local main_frame = parent.add({
         type = "frame",
         direction = "vertical",
