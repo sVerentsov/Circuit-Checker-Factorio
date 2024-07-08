@@ -139,7 +139,7 @@ function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
                 })
             end
         else
-            if not check_input(signal, connected_networks, networks) then
+            if not signal == "blank" and not check_input(signal, connected_networks, networks) then
                 table.insert(errors,
                 {
                     level="E",
@@ -160,7 +160,7 @@ function CHECK_ENTITY(entity, entity_inputs, entity_outputs, networks)
             end
         end
         -- if not matched, create warning.
-        if not matched then
+        if not matched and not signal == 'blank' then
             table.insert(errors,
             {
                 level="W",

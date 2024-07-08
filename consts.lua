@@ -42,6 +42,13 @@ COLORS = {
     ["signal-yellow:virtual"] = true
 }
 
+CB_DISALLOW_NO_WIRES = {
+    [defines.control_behavior.type.programmable_speaker] = true,
+    [defines.control_behavior.type.constant_combinator] = true,
+    [defines.control_behavior.type.arithmetic_combinator] = true,
+    [defines.control_behavior.type.decider_combinator] = true
+}
+
 ENTITIES_ALLOW_NO_OUTPUTS = {
     ['hud-combinator'] = 1
 }

@@ -247,10 +247,6 @@ function IGNORE_ENTITY(entity)
     if ENTITIES_IGNORE_IF_NO_WIRES[entity.prototype.name] ~= nil and not has_wires(entity) then
         return true
     end
-    -- if the entity is not on_off, never ignore
-    if on_off_inherited[behavior.type] == nil then
-        return false
-    end
-    -- if entity connected to logistic network and is not connected to circuit, ignore
-    return behavior.connect_to_logistic_network and not has_wires(entity)
+    -- if no wires are allowed for this entity and it is not connected to circuit, ignore
+    return CB_DISALLOW_NO_WIRES[behavior.type] == nil and not has_wires(entity)
 end

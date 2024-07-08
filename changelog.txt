@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.7
+Date: 2024-07-08
+  Changes:
+    - Fixed false positive when an entity was connected to circuit network and then disconnected. 
+    - Fixed showing "blank" in error messages.
+---------------------------------------------------------------------------------------------------
 Version: 1.1.6
 Date: 2023-05-09
   Features:
